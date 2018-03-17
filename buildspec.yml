@@ -1,0 +1,20 @@
+version: 0.1
+#
+#environment_variables:
+#  plaintext:
+#    CONFIG_FILE: env-details.yml
+
+phases:
+  install:
+    commands:
+#      - pip install --upgrade pip
+      - pip install pyquery requests lxml -t ./
+#      - pip install pyyaml --upgrade
+#      - pip install yamllint --upgrade
+  pre_build:
+    commands:
+      - echo "Validating config file $CONFIG_FILE"
+      - yamllint $CONFIG_FILE
+artifacts:
+  files:
+    - ./
