@@ -18,5 +18,6 @@ phases:
       - ls -l
 #      - yamllint $CONFIG_FILE
 artifacts:
+  type: zip
   files:
     - *
