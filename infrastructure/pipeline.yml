@@ -16,7 +16,7 @@ Parameters:
     Default: master
   GitHubOAuthToken:
     Type: String
-    Default: 6bc22f02f1ff541b4edf06e8b280b8f98c595712
+    Default: 33f4d5f82e2b0760a70c517ff79c0f1cd501fc9b
 
 Resources:
   ArtifactsBucket:
