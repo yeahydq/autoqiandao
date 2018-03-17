@@ -7,20 +7,6 @@ from base64 import b85decode
 from pathlib import Path
 GLOBAL_LOG_FORMAT = '%(asctime)s %(name)s[%(module)s] %(levelname)s: %(message)s'
 import time
-#
-# def set_logger():
-#     logger.propagate = False
-#     # 创建一个handler，用于写入日志文件
-#     fh = logging.FileHandler(GLOBAL_LOG_FILENAME)
-#     # 再创建一个handler，用于输出到控制台
-#     ch = logging.StreamHandler()
-#     formatter = logging.Formatter(GLOBAL_LOG_FORMAT)
-#     fh.setFormatter(formatter)
-#     ch.setFormatter(formatter)
-#     logger.addHandler(fh)
-#     logger.addHandler(ch)
-#
-# set_logger()
 
 class Config:
     def __init__(self):

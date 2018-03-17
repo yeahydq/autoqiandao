@@ -29,7 +29,7 @@ awsEnv=os.environ.get('AWS_ENV',0)
 
 def set_logger():
     logging.basicConfig(format=GLOBAL_LOG_FORMAT, level=GLOBAL_LOG_LVL,filename=GLOBAL_LOG_FILENAME)
-    logger = logging.getLogger('main')
+    logger = logging.getLogger(__name__)
     # logger.propagate = False
     # 创建一个handler，用于写入日志文件
     fh = logging.FileHandler(GLOBAL_LOG_FILENAME)
@@ -53,54 +53,56 @@ config_dict = {
      'version': 1
 }
 logging.config.fileConfig('logging.conf')
-logger = logging.getLogger('main')
+logger = logging.getLogger(__name__)
 
 
-from job_jingguan import jobs_all
+from job_jingguan import ac_job_map
 from aws.aws_mail import sendMail, uploadS3Bucket, uploadS3Cookies, downloadS3Cookies
 # from job_log.logger import logger, GLOBAL_LOG_FILENAME, GLOBAL_COOKIES_FILENAME
 
 
 
 def main(event, context):
-    session = make_session()
+    for ac in ac_job_map:
+        jobs_all=ac_job_map[ac]
+        logger.info("using %s "%ac)
+        jobs = [job for job in jobs_all if job.__name__ not in config.jobs_skip]
+        jobs_failed = []
 
-    jobs = [job for job in jobs_all if job.__name__ not in config.jobs_skip]
-    jobs_failed = []
+        session = make_session(GLOBAL_COOKIES_FILENAME+"_"+ac)
+        for job_class in jobs:
+            job = job_class(session)
 
-    for job_class in jobs:
-        job = job_class(session)
+            try:
+                job.run()
+            except Exception as e:
+                logger.error('# 任务运行出错: ' + repr(e))
+                traceback.print_exc()
 
-        try:
-            job.run()
-        except Exception as e:
-            logger.error('# 任务运行出错: ' + repr(e))
-            traceback.print_exc()
+            if not job.job_success:
+                jobs_failed.append(job.job_name)
 
-        if not job.job_success:
-            jobs_failed.append(job.job_name)
+        logger.info('=================================')
+        logger.info('= 任务数: {}; 失败数: {}'.format(len(jobs), len(jobs_failed)))
 
-    logger.info('=================================')
-    logger.info('= 任务数: {}; 失败数: {}'.format(len(jobs), len(jobs_failed)))
+        if jobs_failed:
+            logger.error('= 失败的任务: {}'.format(jobs_failed))
+        else:
+            logger.info('= 全部成功 ~')
 
-    if jobs_failed:
-        logger.error('= 失败的任务: {}'.format(jobs_failed))
-    else:
-        logger.info('= 全部成功 ~')
+        logger.info('=================================')
 
-    logger.info('=================================')
-
-    save_session(session)
-
-    print('reading',GLOBAL_LOG_FILENAME)
-    print('size is %s' % os.path.getsize(GLOBAL_LOG_FILENAME))
+        save_session(session,GLOBAL_COOKIES_FILENAME+"_"+ac)
+    #
+    # print('reading',GLOBAL_LOG_FILENAME)
+    # print('size is %s' % os.path.getsize(GLOBAL_LOG_FILENAME))
 
     with open(GLOBAL_LOG_FILENAME, "r+") as f:
         sendMail(f.read())
         uploadS3Bucket(GLOBAL_LOG_FILENAME)
 
 
-def make_session() -> requests.Session:
+def make_session(GLOBAL_COOKIES_FILENAME) -> requests.Session:
     session = requests.Session()
 
     session.headers.update({
@@ -117,31 +119,10 @@ def make_session() -> requests.Session:
         logging.error('# 未能成功载入 cookies, 要更新cookie~~ %s'%str(e))
         if awsEnv=="1":
             sys.exit(3)
-
-    # data_file = Path(__file__).parent.joinpath('../data/jingguan_cookies')
-    # if os.path.exists(data_file):
-    # # if data_file.exists():
-    #     try:
-    #         bytes = data_file.read_bytes()
-    #         cookies = pickle.loads(bytes)
-    #         session.cookies = cookies
-    #         logging.info('# 从文件加载 cookies 成功.')
-    #     except Exception as e:
-    #         logging.info('# 未能成功载入 cookies, 从头开始~')
-
     return session
 
 
-def save_session(session):
-    # data = pickle.dumps(session.cookies)
-    #
-    # data_dir = Path(__file__).parent.joinpath('../data/')
-    # data_dir.mkdir(exist_ok=True)
-    # data_file = data_dir.joinpath('jingguan_cookies')
-    #
-    # # data_file = GLOBAL_COOKIES
-    # data_file.write_bytes(data)
-
+def save_session(session,GLOBAL_COOKIES_FILENAME):
     with open(GLOBAL_COOKIES_FILENAME, "wb") as f:
         pickle.dump(session.cookies, f)
 
