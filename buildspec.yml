@@ -18,6 +18,5 @@ phases:
       - ls -l
 #      - yamllint $CONFIG_FILE
 artifacts:
-  packaging:
-    - ZIP
-#    - *
+  files:
+    - build-output.zip
