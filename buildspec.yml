@@ -24,7 +24,7 @@ phases:
   post_build:
     commands:
       - ls -l
-#
-#artifacts:
-#  files:
-#    - build-output.zip
+
+artifacts:
+  files:
+    - app/*
