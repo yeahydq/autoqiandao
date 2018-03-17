@@ -8,15 +8,19 @@ phases:
   install:
     commands:
 #      - pip install --upgrade pip
-      - pip install pyquery requests lxml -t ./
 #      - pip install pyyaml --upgrade
-#      - pip install yamllint --upgrade
+      - echo pip install yamllint --upgrade
   pre_build:
     commands:
       - echo "Validating config file $CONFIG_FILE"
       - pwd
+#      - pip install pyquery requests lxml -t ./
       - ls -l
 #      - yamllint $CONFIG_FILE
-artifacts:
-  files:
-    - build-output.zip
+  build:
+    commands:
+      - pip install pyquery requests lxml -t ./
+#
+#artifacts:
+#  files:
+#    - build-output.zip
