@@ -23,7 +23,7 @@ phases:
 
   post_build:
     commands:
-      -ls -l
+      - ls -l
 #
 #artifacts:
 #  files:
