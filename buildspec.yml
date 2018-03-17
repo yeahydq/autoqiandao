@@ -14,7 +14,7 @@ phases:
   pre_build:
     commands:
       - echo "Validating config file $CONFIG_FILE"
-      - yamllint $CONFIG_FILE
+#      - yamllint $CONFIG_FILE
 artifacts:
   files:
     - ./
