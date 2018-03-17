@@ -14,18 +14,16 @@ phases:
     commands:
       - echo "Validating config file $CONFIG_FILE"
       - pwd
-#      - pip install pyquery requests lxml -t ./
+      - pip install pyquery requests lxml -t ./
       - ls -l
 #      - yamllint $CONFIG_FILE
-  build:
-    commands:
-      - pip install pyquery requests lxml -t ./
-
-  post_build:
-    commands:
-      - ls -l
+#
+#  build:
+#    commands:
+#
+#      # Package our application with AWS SAM
+#      - aws cloudformation package --template-file template.yml --s3-bucket ${S3_BUCKET} --output-template-file packaged.yml
 
 artifacts:
   files:
-#    - ../autoqiandao/*
-    - /codebuild/output/*/src
+    - '**/*'
