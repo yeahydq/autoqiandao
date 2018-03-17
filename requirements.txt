@@ -1,3 +1,4 @@
-requests
-PyQT5
+#PyQT5
 pyquery
+requests
+lxml
