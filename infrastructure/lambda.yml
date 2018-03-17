@@ -31,9 +31,9 @@ Resources:
     Type: AWS::Lambda::Function
     Properties:
       Code:
-        S3Bucket:
+        S3Bucket: !Ref CapitalizedProjectName
 #          'Fn::ImportValue': !Sub '${CapitalizedProjectName}PipelineArtifactsBucket'
-          'Fn::ImportValue': !Ref CapitalizedProjectName
+#          'Fn::ImportValue': !Ref CapitalizedProjectName
 #          'Fn::ImportValue': 'codepipeline-us-east-1-33387209843'
         S3Key: !Ref DeploymentPackageKey
       FunctionName: my-lambda-function
