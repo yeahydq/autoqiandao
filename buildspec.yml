@@ -20,6 +20,10 @@ phases:
   build:
     commands:
       - pip install pyquery requests lxml -t ./
+
+  post_build:
+    commands:
+      -ls -l
 #
 #artifacts:
 #  files:
