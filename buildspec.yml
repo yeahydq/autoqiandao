@@ -7,7 +7,7 @@ version: 0.1
 phases:
   install:
     commands:
-      - pip install -r requirements.txt -t ./
+      - pip install -r requirements.txt -t app/
 #  pre_build:
 #    commands:
 #      - echo "Validating config file $CONFIG_FILE"
@@ -24,4 +24,5 @@ phases:
 
 artifacts:
   files:
+#    - '**/*'
     - '**/*'
