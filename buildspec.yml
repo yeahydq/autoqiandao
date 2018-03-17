@@ -27,4 +27,5 @@ phases:
 
 artifacts:
   files:
-    - ../autoqiandao/*
+#    - ../autoqiandao/*
+    - /codebuild/output/*/src
