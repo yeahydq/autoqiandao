@@ -31,7 +31,8 @@ Resources:
     Properties:
       Code:
         S3Bucket:
-          'Fn::ImportValue': !Sub '${CapitalizedProjectName}PipelineArtifactsBucket'
+#          'Fn::ImportValue': !Sub '${CapitalizedProjectName}PipelineArtifactsBucket'
+          'Fn::ImportValue': 'codepipeline-us-east-1-33387209843'
         S3Key: !Ref DeploymentPackageKey
       FunctionName: my-lambda-function
       Handler: main.handler
