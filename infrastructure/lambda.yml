@@ -39,7 +39,9 @@ Resources:
       FunctionName: my-lambda-function
       Handler: jingguan.main
       Role: !GetAtt LambdaRunnerRole.Arn
-      Runtime: python3.5
+      Runtime: python3.6
+      Variables:
+        'AWS_ENV': 'AWS_ENV'
 
 Outputs:
   LambdaFunction:
