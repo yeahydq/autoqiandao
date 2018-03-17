@@ -17,6 +17,7 @@ phases:
       - pwd
       - ls -l
 #      - yamllint $CONFIG_FILE
-#artifacts:
-#  files:
+artifacts:
+  packaging:
+    - ZIP
 #    - *
