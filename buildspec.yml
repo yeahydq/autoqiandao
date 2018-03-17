@@ -7,15 +7,13 @@ version: 0.1
 phases:
   install:
     commands:
-#      - pip install --upgrade pip
-#      - pip install pyyaml --upgrade
-      - echo pip install yamllint --upgrade
-  pre_build:
-    commands:
-      - echo "Validating config file $CONFIG_FILE"
-      - pwd
-      - pip install pyquery requests lxml -t ./
-      - ls -l
+      - pip install -r requirements.txt -t ./
+#  pre_build:
+#    commands:
+#      - echo "Validating config file $CONFIG_FILE"
+#      - pwd
+#      - pip install pyquery requests lxml -t ./
+#      - ls -l
 #      - yamllint $CONFIG_FILE
 #
 #  build:
