@@ -26,3 +26,4 @@ artifacts:
   files:
     - '**/*'
 #    - 'app/**'
+  base-directory: app
