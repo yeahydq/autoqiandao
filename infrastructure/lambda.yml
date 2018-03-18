@@ -48,6 +48,27 @@ Resources:
         Variables:
           AWS_ENV: 1
 
+
+  CloudWatchEventRunnerRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - sts:AssumeRole
+            Principal:
+              Service:
+                - events.amazonaws.com
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/CloudWatchEventsInvocationAccess
+        - arn:aws:iam::aws:policy/service-role/CloudWatchEventsBuiltInTargetExecutionAccess
+#        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+#        - arn:aws:iam::aws:policy/CloudWatchFullAccess
+#        - arn:aws:iam::aws:policy/AmazonSNSFullAccess
+
   MyEventsRule:
     Type: 'AWS::Events::Rule'
     Properties:
@@ -56,7 +77,7 @@ Resources:
 #        source:
 #          - aws.ec2
       RoleArn: !GetAtt
-        - LambdaRunnerRole
+        - CloudWatchEventRunnerRole
         - Arn
       ScheduleExpression: cron(0 2 ? * * *)
       State: ENABLED
