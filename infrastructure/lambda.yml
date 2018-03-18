@@ -88,7 +88,7 @@ Resources:
             - Arn
           Id: AutoCheckin
           RoleArn: !GetAtt
-            - LambdaRunnerRole
+            - CloudWatchEventRunnerRole
             - Arn
 #          KinesisParameters:
 #            PartitionKeyPath: $
