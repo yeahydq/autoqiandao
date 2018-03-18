@@ -22,7 +22,8 @@ phases:
       - ls -l
       - aws s3 cp s3://dick-code-lambda/lxml.zip ./
       - ls -l
-#      - rm -rf lxml*/
+      - rm -rf app/lxml*
+      - unzip lxml.zip -d app/
 #  build:
 #    commands:
 #
