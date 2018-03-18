@@ -37,7 +37,7 @@ Resources:
 #          'Fn::ImportValue': 'codepipeline-us-east-1-33387209843'
         S3Key: !Ref DeploymentPackageKey
       FunctionName: my-lambda-function
-      Handler: app/jingguan.main
+      Handler: jingguan.main
       Role: !GetAtt LambdaRunnerRole.Arn
       Runtime: python3.6
       Timeout: 300
