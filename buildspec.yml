@@ -16,14 +16,11 @@ phases:
       - virtualenv venv --no-site-packages --python=python3.5
       - . venv/bin/activate
       - pip install -r requirements.txt -t ./app/
-#  pre_build:
-#    commands:
-#      - echo "Validating config file $CONFIG_FILE"
-#      - pwd
-#      - pip install pyquery requests lxml -t ./
-#      - ls -l
-#      - yamllint $CONFIG_FILE
-#
+  pre_build:
+    commands:
+      - pwd
+      - ls -l
+
 #  build:
 #    commands:
 #
