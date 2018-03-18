@@ -9,7 +9,7 @@ phases:
     commands:
 #      - pip uninstall lxml
 #      - sudo apt-get install python3-venv
-      - sudo dpkg-reconfig bash
+      - sudo dpkg-reconfigure bash
       - pip install virtualenv
       - pip --version
 #      - sudo apt-get install python3-venv
