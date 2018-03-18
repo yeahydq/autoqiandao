@@ -1,5 +1,5 @@
 #PyQT5
-lxml==3.4.1
-pyquery
+#lxml==3.4.1
+pyquery=1.4.0
 requests
 #lxml==3.7.1
