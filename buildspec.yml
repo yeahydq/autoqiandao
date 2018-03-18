@@ -9,7 +9,8 @@ phases:
     commands:
 #      - pip uninstall lxml
 #      - sudo apt-get install python3-venv
-      - pip install virtualenv
+#      - pip install virtualenv
+      - apt-get install python-virtualenv
       - virtualenv venv --no-site-packages --python=python3.6
       - source venv/bin/activate
       - pip install -r requirements.txt -t ./app/
