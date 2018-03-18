@@ -55,19 +55,19 @@ Resources:
 #      EventPattern:
 #        source:
 #          - aws.ec2
-#      RoleArn: !GetAtt
-#        - EventsInvokeKinesisTargetRole
-#        - Arn
+      RoleArn: !GetAtt
+        - LambdaRunnerRole
+        - Arn
       ScheduleExpression: cron(0 2 ? * * *)
       State: ENABLED
       Targets:
         - Arn: !GetAtt
             - LambdaFunction
             - Arn
-#          Id: Id123
-#          RoleArn: !GetAtt
-#            - EventsInvokeKinesisTargetRole
-#            - Arn
+          Id: AutoCheckin
+          RoleArn: !GetAtt
+            - LambdaRunnerRole
+            - Arn
 #          KinesisParameters:
 #            PartitionKeyPath: $
 
