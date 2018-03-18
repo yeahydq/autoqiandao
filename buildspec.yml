@@ -20,7 +20,9 @@ phases:
     commands:
       - pwd
       - ls -l
-
+      - aws s3 cp s3://dick-code-lambda/lxml.zip ./
+      - ls -l
+#      - rm -rf lxml*/
 #  build:
 #    commands:
 #
