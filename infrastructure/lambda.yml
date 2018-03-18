@@ -48,6 +48,29 @@ Resources:
         Variables:
           AWS_ENV: 1
 
+  MyEventsRule:
+    Type: 'AWS::Events::Rule'
+    Properties:
+      Description: Events Rule with Lambda function
+#      EventPattern:
+#        source:
+#          - aws.ec2
+#      RoleArn: !GetAtt
+#        - EventsInvokeKinesisTargetRole
+#        - Arn
+      ScheduleExpression: cron(0 2 ? * * *)
+      State: ENABLED
+      Targets:
+        - Arn: !GetAtt
+            - LambdaFunction
+            - Arn
+#          Id: Id123
+#          RoleArn: !GetAtt
+#            - EventsInvokeKinesisTargetRole
+#            - Arn
+#          KinesisParameters:
+#            PartitionKeyPath: $
+
 Outputs:
   LambdaFunction:
     Description: The ARN of the created Lambda function
