@@ -10,12 +10,13 @@ logger = logging.getLogger(__name__)
 class Bean(Daka):
     job_name = '经管论坛会员页签到领经验'
 
-    index_url = 'http://bbs.pinggu.org/'
-    # info_url = 'http://bbs.pinggu.org/home.php?mod=spacecp&ac=credit'
+    # index_url = 'http://bbs.pinggu.org/'
     # step 1/2 sign-in
     sign_url = 'http://bbs.pinggu.org/plugin.php?id=dsu_paulsign:sign'
     # step 2/2 sign-in
     real_sign_url = 'http://bbs.pinggu.org/plugin.php?id=dsu_paulsign:sign&operation=qiandao&infloat=1&inajax=1'
+
+    # to check whether it contain some unlogin info in the bucket
     test_url = 'http://bbs.pinggu.org/member.php?mod=logging&action=login'
     login_url = test_url
     logger=logger
@@ -53,6 +54,7 @@ class Bean(Daka):
         r = self.session.get(self.test_url, allow_redirects=False)
         # r = self.session.get(self.test_url)
 
+        # if fail, location=http://passport.pinggu.org/login/index?appId=1&redirect=http%3A%2F%2Fbbs.pinggu.org
         if r.is_redirect and 'passport' in r.headers['Location']:
             return False
         else:
@@ -104,19 +106,19 @@ class Bean(Daka):
             message = 'Fail'
             self.logger.error('签到失败: {}'.format(message))
             return False
-
-    def _get_token(self):
-        html = self._get_page_data()
-        pattern = r'token:\s*"(\d+)"'
-        token = common.find_value(pattern, html)
-
-        if not token:
-            raise Exception('token 未找到.')
-
-        return token
-
-    def _get_page_data(self):
-        if not self.page_data:
-            self.page_data = self.session.get(self.index_url).text
-
-        return self.page_data
+    #
+    # def _get_token(self):
+    #     html = self._get_page_data()
+    #     pattern = r'token:\s*"(\d+)"'
+    #     token = common.find_value(pattern, html)
+    #
+    #     if not token:
+    #         raise Exception('token 未找到.')
+    #
+    #     return token
+    #
+    # def _get_page_data(self):
+    #     if not self.page_data:
+    #         self.page_data = self.session.get(self.index_url).text
+    #
+    #     return self.page_data

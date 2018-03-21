@@ -10,7 +10,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 class Daka:
-    job_name = '小白卡钢镚打卡'
+    job_name = 'base打卡'
 
     # index_url = 'http://bbs.pinggu.org/'
     # login_url = 'http://bbs.pinggu.org/member.php?mod=logging&action=login'
