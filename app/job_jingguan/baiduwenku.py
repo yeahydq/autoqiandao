@@ -6,19 +6,20 @@ from .daka import Daka
 from .common import find_value, RequestError
 import logging
 logger = logging.getLogger(__name__)
+import urllib
+import time
+class Wenku(Daka):
+    job_name = '百度签到领经验'
 
-class Bean(Daka):
-    job_name = '经管论坛会员页签到领经验'
-
-    # index_url = 'http://bbs.pinggu.org/'
     # step 1/2 sign-in ( for chk the sign-in status)
-    sign_url = 'http://bbs.pinggu.org/plugin.php?id=dsu_paulsign:sign'
+    sign_url = 'https://wenku.baidu.com/task/submit/signin'
     # step 2/2 sign-in (sign in if step 1 is not sign-in yet)
     real_sign_url = 'http://bbs.pinggu.org/plugin.php?id=dsu_paulsign:sign&operation=qiandao&infloat=1&inajax=1'
 
     # to check whether it contain some unlogin info in the bucket
-    test_url = 'http://bbs.pinggu.org/member.php?mod=logging&action=login'
-    login_url = test_url
+    test_url = 'https://wenku.baidu.com/task/submit/signin'
+    test_url = 'https://wenku.baidu.com/user/mydocs?fr=nav'
+    login_url = 'https://passport.baidu.com/v2/?login'
     logger=logger
 
     def __init__(self, session):
@@ -55,12 +56,41 @@ class Bean(Daka):
         # r = self.session.get(self.test_url)
 
         # if fail, location=http://passport.pinggu.org/login/index?appId=1&redirect=http%3A%2F%2Fbbs.pinggu.org
-        if r.is_redirect and 'passport' in r.headers['Location']:
+        # if 'errno' in r.text:
+        #     return False
+        # else:
+        #     return True
+        if r.is_redirect and 'passport' in r.headers.get('location',""):
             return False
         else:
             return True
 
     def is_signed(self):
+        sign_url='https://wenku.baidu.com/task/submit/signin'
+        page_data=self.session.get(self.sign_url).text
+
+        data={
+            'pid': '1',
+            'bid': '1',
+            'fr': '4',
+            'act_id': '100369',
+            'url': 'https://wenku.baidu.com/task/browse/daily',
+            # 'refer': 'https://wenku.baidu.com/task/browse/daily',
+            'refer': '',
+            't': int(time.time())*1000,
+            'index': '1',
+            'ssl': '1',
+            '_click_param_pc_rec_doc_2017_testid': '5',
+            '_sessionx_url_param': '{}',
+                }
+        url='https://wkctj.baidu.com/click.gif'
+        data = urllib.parse.urlencode(data)  # 提交类型不能为str，需要为byte类型
+        # page_data = self.session.get(url,data=data)
+        url='%s%s%s' % (url,'?',data)
+        print(url)
+        page_data = self.session.get(url)
+
+        sign_url='https://wenku.baidu.com/task/submit/signin'
         page_data=self.session.get(self.sign_url).text
         signed = '今天可获得经验' not in PyQuery(page_data)('.biaoge').text()
         message1=PyQuery(page_data)('.luntanbi .biaoge .qdnewinfo').text()
