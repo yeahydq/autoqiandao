@@ -1,10 +1,10 @@
 # -*- coding: UTF-8 -*-
 import smtplib
 from email.mime.text import MIMEText
-mailto_list=['404111191@qq.com']           #收件人(列表)
+mailto_list=['xxxxx@qq.com']           #收件人(列表)
 mail_host="smtp.163.com"            #使用的邮箱的smtp服务器地址，这里是163的smtp地址
-mail_user="yeahydq"                           #用户名
-mail_pass="87267526Ydq"                             #密码
+mail_user="xxxxx"                           #用户名
+mail_pass="xxxxx"                             #密码
 mail_postfix="163.com"                     #邮箱的后缀，网易就是163.com
 def send_mail(to_list,sub,content):
     me="hello"+"<"+mail_user+"@"+mail_postfix+">"
