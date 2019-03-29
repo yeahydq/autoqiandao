@@ -42,6 +42,8 @@ class Bean(Daka):
                 'qdxq': 'kx',
                 'qdmode': '1',
                 'qdtypeid': '0',
+                'qdsubject': 'so happy today',
+                'todaysay': 'so happy today',
                 'fastreply': '0',
                 }
 
