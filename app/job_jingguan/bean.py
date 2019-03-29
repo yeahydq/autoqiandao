@@ -42,8 +42,8 @@ class Bean(Daka):
                 'qdxq': 'kx',
                 'qdmode': '1',
                 'qdtypeid': '0',
-                'qdsubject': '今天签到了，啊哈哈',
-                'todaysay': '今天签到了，啊哈哈，好开心',
+                'qdsubject': u'今天签到了，啊哈哈',
+                'todaysay': u'今天签到了，啊哈哈，好开心',
                 'fastreply': '0',
                 }
 
