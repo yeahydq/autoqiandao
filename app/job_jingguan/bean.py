@@ -35,7 +35,8 @@ class Bean(Daka):
     def sign(self):
         # response = self.session.get(self.sign_url, params=payload).json()
         page_data=self.session.get(self.sign_url).text
-        formhash = PyQuery(page_data)('.userli03 a').attr('href').split('=')[-1]
+        # formhash = PyQuery(page_data)('.userli03 a').attr('href').split('=')[-1]
+        formhash = PyQuery(page_data)("form input[name=formhash]").attr('value')
 
         requestForm={
                 'formhash': formhash,
